@@ -1,0 +1,15 @@
+package com.netpos.desafiobackend.service;
+
+import com.netpos.desafiobackend.error.GenericError;
+
+import java.util.List;
+
+public interface CrudService<T> {
+
+    T save(T t) throws GenericError;
+
+    T findById(Integer id) throws GenericError;
+
+    List<T> findAll() throws GenericError;
+
+}

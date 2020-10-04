@@ -64,7 +64,7 @@ public class UserAccountServiceImpl implements UserAccountService {
         String nameSemAcentos = Normalizer.normalize(name, Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", "");
 
-        return Optional.of(this.userAccountRepository.findByFullNameLike(nameSemAcentos))
+        return Optional.of(this.userAccountRepository.findByFullNameStartingWith(nameSemAcentos))
                 .orElseThrow(GenericError::new);
     }
 }

@@ -10,5 +10,5 @@ public interface UserAccountRepository extends JpaRepository<UserAccount, Intege
     /**
      * Filtra os usuários pelo nome
      */
-    List<UserAccount> findByFullNameLike(String name);
+    List<UserAccount> findByFullNameStartingWith(String name);
 }

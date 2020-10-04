@@ -30,7 +30,7 @@ public class UserController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<List<UserAccount>> list(@RequestParam(value = "q", required = false) String filter) {
+    public ResponseEntity<List<UserAccount>> list(@RequestParam(value = "q", required = false, defaultValue = "") String filter) {
         try {
             return new ResponseEntity<>(this.userAccountService.filterByName(filter), HttpStatus.OK);
         }

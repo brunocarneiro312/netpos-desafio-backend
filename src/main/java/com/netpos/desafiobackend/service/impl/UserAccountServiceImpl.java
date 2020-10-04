@@ -27,6 +27,24 @@ public class UserAccountServiceImpl implements UserAccountService {
     }
 
     @Override
+    public UserAccount update(UserAccount userAccount) throws GenericError {
+        /**
+         * A especificação não solicita a implementação desse método
+         * para o UserAccount
+         */
+        return null;
+    }
+
+    @Override
+    public UserAccount delete(Integer id) throws GenericError {
+        /**
+         * A especificação não solicita a implementação desse método
+         * para o UserAccount
+         */
+        return null;
+    }
+
+    @Override
     public UserAccount findById(Integer id) throws GenericError {
         return Optional.of(this.userAccountRepository.findById(id).get())
                 .orElseThrow(GenericError::new);

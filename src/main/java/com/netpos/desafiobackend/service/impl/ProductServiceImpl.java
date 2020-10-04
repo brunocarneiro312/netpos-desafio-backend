@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService  {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository) {
@@ -21,16 +22,35 @@ public class ProductServiceImpl implements ProductService  {
 
     @Override
     public Product save(Product product) throws GenericError {
-        return null;
+        return Optional.of(this.productRepository.save(product))
+                .orElseThrow(GenericError::new);
+    }
+
+    @Override
+    public Product update(Product product) throws GenericError {
+        return Optional.of(this.productRepository.saveAndFlush(product))
+                .orElseThrow(GenericError::new);
+    }
+
+    @Override
+    public Product delete(Integer id) throws GenericError {
+        Product productRemoved = findById(id);
+        if (productRemoved == null) {
+            throw new GenericError();
+        }
+        this.productRepository.delete(productRemoved);
+        return productRemoved;
     }
 
     @Override
     public Product findById(Integer id) throws GenericError {
-        return null;
+        return Optional.of(this.productRepository.findById(id.longValue()).get())
+                .orElseThrow(GenericError::new);
     }
 
     @Override
     public List<Product> findAll() throws GenericError {
-        return null;
+        return Optional.of(this.productRepository.findAll())
+                .orElseThrow(GenericError::new);
     }
 }

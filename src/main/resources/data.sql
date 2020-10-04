@@ -1,1 +1,0 @@
-INSERT INTO USER_ACCOUNT (ID, EMAIL, FULL_NAME, SENHA) VALUES (1, 'netpos@netpos', 'netpos user', 'netpos');

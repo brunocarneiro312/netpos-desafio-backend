@@ -49,7 +49,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserAccount> post(@RequestBody CreateUserAccountRequest request) {
         try {
-            return new ResponseEntity<>(this.userAccountService.save(null), HttpStatus.OK);
+            UserAccount userAccount = new UserAccount.Builder()
+                    .email(request.getEmail())
+                    .fullName(request.getFullName())
+                    .senha(request.getPassword())
+                    .build();
+
+            return new ResponseEntity<>(this.userAccountService.save(userAccount), HttpStatus.OK);
         }
         catch (GenericError e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ public class Stock {
     @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "QUANTITY", columnDefinition = "integer default 0")
+    @Column(name = "QUANTITY", columnDefinition = "integer default 0", length = 1000)
     private Integer quantity;
+
 }

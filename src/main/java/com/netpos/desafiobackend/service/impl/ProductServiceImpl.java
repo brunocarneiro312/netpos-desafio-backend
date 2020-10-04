@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService  {
@@ -22,6 +23,7 @@ public class ProductServiceImpl implements ProductService  {
 
     @Override
     public Product save(Product product) throws GenericError {
+        product.setCode(UUID.randomUUID().toString());
         return Optional.of(this.productRepository.save(product))
                 .orElseThrow(GenericError::new);
     }

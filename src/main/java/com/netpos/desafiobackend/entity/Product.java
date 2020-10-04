@@ -26,8 +26,11 @@ public class Product {
     @Column(name = "PRICE", nullable = false)
     private Float price;
 
-    @OneToOne
+    @ManyToOne
     private Stock stock;
+
+    @ManyToOne
+    private UserAccount userAccount;
 
     @Override
     public String toString() {

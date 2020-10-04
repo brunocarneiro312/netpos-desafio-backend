@@ -7,6 +7,7 @@ import com.netpos.desafiobackend.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,17 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public List<UserAccount> findAll() throws GenericError {
         return Optional.of(this.userAccountRepository.findAll())
+                .orElseThrow(GenericError::new);
+    }
+
+    @Override
+    public List<UserAccount> filterByName(String name) throws GenericError {
+
+        // Os acentos devem ser ignorados
+        String nameSemAcentos = Normalizer.normalize(name, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
+
+        return Optional.of(this.userAccountRepository.findByFullNameLike(nameSemAcentos))
                 .orElseThrow(GenericError::new);
     }
 }

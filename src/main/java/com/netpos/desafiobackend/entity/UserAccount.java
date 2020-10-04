@@ -73,7 +73,7 @@ public class UserAccount {
         }
 
         public UserAccount build() {
-            return new UserAccount(id, fullName, email, senha);
+            return new UserAccount(id, email, fullName, senha);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.netpos.desafiobackend.service.impl;
 
 import com.netpos.desafiobackend.entity.Product;
+import com.netpos.desafiobackend.entity.UserAccount;
 import com.netpos.desafiobackend.error.GenericError;
 import com.netpos.desafiobackend.repository.ProductRepository;
 import com.netpos.desafiobackend.service.ProductService;
@@ -53,6 +54,13 @@ public class ProductServiceImpl implements ProductService  {
     @Override
     public List<Product> findAll() throws GenericError {
         return Optional.of(this.productRepository.findAll())
+                .orElseThrow(GenericError::new);
+    }
+
+    @Override
+    public List<Product> findWithFilter(String name, String code, Integer userId) throws GenericError {
+        return Optional.of(
+                this.productRepository.findByNameStartingWithOrCodeStartingWithAndUserAccountId(name, code, userId))
                 .orElseThrow(GenericError::new);
     }
 }

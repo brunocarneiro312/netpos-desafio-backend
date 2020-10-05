@@ -1,13 +1,14 @@
 package com.netpos.desafiobackend.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
@@ -26,7 +27,7 @@ public class Product {
     @Column(name = "PRICE", nullable = false)
     private Float price;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Stock stock;
 
     @ManyToOne
@@ -42,12 +43,13 @@ public class Product {
                 '}';
     }
 
-    public Product(Integer id, String code, String name, Float price, Stock stock) {
+    public Product(Integer id, String code, String name, Float price, Stock stock, UserAccount userAccount) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.price = price;
         this.stock = stock;
+        this.userAccount = userAccount;
     }
 
     public static class Builder {
@@ -56,6 +58,7 @@ public class Product {
         private String name;
         private Float price;
         private Stock stock;
+        private UserAccount userAccount;
 
         public Builder id(Integer id) {
             this.id = id;
@@ -82,8 +85,13 @@ public class Product {
             return this;
         }
 
+        public Builder userAccount(UserAccount userAccount) {
+            this.userAccount = userAccount;
+            return this;
+        }
+
         public Product build() {
-            return new Product(id, code, name, price, stock);
+            return new Product(id, code, name, price, stock, userAccount);
         }
     }
 }

@@ -4,11 +4,11 @@ import com.netpos.desafiobackend.dto.request.ProductCreateRequest;
 import com.netpos.desafiobackend.dto.request.ProductStockUpdate;
 import com.netpos.desafiobackend.dto.request.ProductUpdateRequest;
 import com.netpos.desafiobackend.entity.Product;
+import com.netpos.desafiobackend.entity.UserAccount;
 import com.netpos.desafiobackend.error.GenericError;
 import com.netpos.desafiobackend.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.netpos.desafiobackend.service.UserAccountService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,10 +19,12 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final UserAccountService userAccountService;
 
-    @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,
+                             UserAccountService userAccountService) {
         this.productService = productService;
+        this.userAccountService = userAccountService;
     }
 
     /**
@@ -35,14 +37,17 @@ public class ProductController {
      * @param type: asc, desc
      * @return
      */
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-                produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Product>> list(@RequestHeader("user_id") Integer userId,
-                                              @RequestParam(value = "filter", required = false) String filter,
-                                              @RequestParam(value = "order", required = false) String order,
-                                              @RequestParam(value = "type", required = false) String type) {
+    @GetMapping
+    public ResponseEntity<List<Product>> list(
+            @RequestHeader("user_id") Integer userId,
+            @RequestParam(value = "filter", required = false, defaultValue = "") String filter,
+            @RequestParam(value = "order", required = false, defaultValue = "") String order,
+            @RequestParam(value = "type", required = false, defaultValue = "asc") String type) {
+
         try {
-            return new ResponseEntity<>(this.productService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    this.productService.findWithFilter(filter, filter, userId),
+                    HttpStatus.OK);
         }
         catch (GenericError e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,7 +66,15 @@ public class ProductController {
     public ResponseEntity<Product> post(@RequestHeader("user_id") Integer userId,
                                         @RequestBody ProductCreateRequest request) {
         try {
-            return new ResponseEntity<>(this.productService.save(null), HttpStatus.OK);
+            UserAccount userAccount = this.userAccountService.findById(userId);
+            assert userAccount != null;
+            Product product = new Product.Builder()
+                    .name(request.getName())
+                    .price(request.getPrice())
+                    .stock(request.getStock())
+                    .userAccount(userAccount)
+                    .build();
+            return new ResponseEntity<>(this.productService.save(product), HttpStatus.OK);
         }
         catch (GenericError e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

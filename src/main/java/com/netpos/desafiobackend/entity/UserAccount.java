@@ -1,19 +1,17 @@
 package com.netpos.desafiobackend.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "USER_ACCOUNT")
 public class UserAccount {
-
-    public UserAccount() {
-
-    }
 
     public UserAccount(Integer id, String email, String fullName, String senha) {
         this.id = id;

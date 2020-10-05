@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author brunocarneiro
+ */
 @RestController
 @RequestMapping("/products")
 public class ProductController {

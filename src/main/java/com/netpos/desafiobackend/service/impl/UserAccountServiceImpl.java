@@ -11,10 +11,13 @@ import java.text.Normalizer;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author brunocarneiro
+ */
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private UserAccountRepository userAccountRepository;
+    private final UserAccountRepository userAccountRepository;
 
     @Autowired
     public UserAccountServiceImpl(UserAccountRepository userAccountRepository) {

@@ -4,6 +4,9 @@ import com.netpos.desafiobackend.enums.OperationEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author brunocarneiro
+ */
 @Getter
 @Setter
 public class ProductStockUpdate {

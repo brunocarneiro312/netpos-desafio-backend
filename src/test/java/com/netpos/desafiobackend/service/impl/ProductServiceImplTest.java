@@ -20,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+/**
+ * @author brunocarneiro
+ */
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
 

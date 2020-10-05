@@ -4,6 +4,9 @@ import com.netpos.desafiobackend.error.GenericError;
 
 import java.util.List;
 
+/**
+ * @author brunocarneiro
+ */
 public interface CrudService<T> {
 
     T save(T t) throws GenericError;

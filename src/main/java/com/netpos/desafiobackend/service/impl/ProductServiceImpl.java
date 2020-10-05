@@ -14,6 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
 
+/**
+ * @author brunocarneiro
+ */
 @Service
 public class ProductServiceImpl implements ProductService  {
 

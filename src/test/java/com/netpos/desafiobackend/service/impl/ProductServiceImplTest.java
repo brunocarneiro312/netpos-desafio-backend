@@ -77,7 +77,7 @@ class ProductServiceImplTest {
         // given
         Integer id = 1;
 
-        given(this.productRepository.findById(id.longValue())).willReturn(Optional.of(getProduct()));
+        given(this.productRepository.findById(id)).willReturn(Optional.of(getProduct()));
 
         // when
         Product deletedProduct = this.productService.delete(id);
@@ -94,7 +94,7 @@ class ProductServiceImplTest {
         // given
         Integer id = 1;
 
-        given(this.productRepository.findById(id.longValue())).willReturn(Optional.of(getProduct()));
+        given(this.productRepository.findById(id)).willReturn(Optional.of(getProduct()));
 
         // when
         Product recoveredProduct = this.productService.findById(id);

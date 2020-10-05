@@ -95,7 +95,13 @@ public class ProductController {
                                        @PathVariable("product_id") Integer productId,
                                        @RequestBody ProductUpdateRequest updateRequest) {
         try {
-            return new ResponseEntity<>(this.productService.update(null), HttpStatus.OK);
+            UserAccount userAccount = this.userAccountService.findById(userId);
+            Product product = this.productService.findById(productId);
+            assert userAccount != null;
+            assert product != null;
+            product.setName(updateRequest.getName());
+            product.setPrice(updateRequest.getPrice());
+            return new ResponseEntity<>(this.productService.update(product), HttpStatus.OK);
         }
         catch (GenericError e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

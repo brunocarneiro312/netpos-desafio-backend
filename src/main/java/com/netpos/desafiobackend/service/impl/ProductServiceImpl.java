@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService  {
 
     @Override
     public Product findById(Integer id) throws GenericError {
-        return Optional.of(this.productRepository.findById(id.longValue()).get())
+        return Optional.of(this.productRepository.findById(id).get())
                 .orElseThrow(GenericError::new);
     }
 

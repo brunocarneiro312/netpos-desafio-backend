@@ -116,11 +116,21 @@ public class ProductController {
      * @param productId
      * @return
      */
-    @DeleteMapping("{/product_id}")
+    @DeleteMapping("/{product_id}")
     public ResponseEntity<Product> delete(@RequestHeader("user_id") Integer userId,
                                           @PathVariable("product_id") Integer productId) {
         try {
-            return new ResponseEntity<>(this.productService.delete(null), HttpStatus.OK);
+
+            UserAccount userAccount = this.userAccountService.findById(userId);
+            Product product = this.productService.findById(productId);
+
+            assert userAccount != null;
+            assert product != null;
+
+            // Não iremos deletar o produto fisicamente.
+            // Apenas estamos desassociando o produto do usuário.
+            product.setUserAccount(null);
+            return new ResponseEntity<>(this.productService.update(product), HttpStatus.OK);
         }
         catch (GenericError e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
